@@ -13,8 +13,18 @@
       --border: #e8e8e8;
       --text: #1a1a1a;
       --muted: #888;
-      --accent: #1a1a1a;
       --ratio-color: #555;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --surface: #1c1c1c;
+        --border: #2e2e2e;
+        --text: #e8e8e8;
+        --muted: #777;
+        --ratio-color: #aaaaaa;
+      }
     }
 
     body {
@@ -24,96 +34,36 @@
       min-height: 100vh;
     }
 
-    header {
-      padding: 1.5rem 1rem 0;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    h1 span {
-      font-weight: 300;
-      color: var(--muted);
-    }
-
-    .controls {
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      padding: 1rem;
-      max-width: 640px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      z-index: 10;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .tabs {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .tab {
-      flex: 1;
-      padding: 0.5rem;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      color: var(--muted);
-      transition: all 0.15s;
-    }
-
-    .tab.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    input[type="search"] {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-    }
-
-    input[type="search"]:focus {
-      border-color: var(--accent);
-    }
-
     main {
       max-width: 640px;
       margin: 0 auto;
       padding: 1rem;
     }
 
+    .section-heading {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 2rem 0 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-heading:first-child {
+      margin-top: 0;
+    }
+
     .group-heading {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 1.5rem 0 0.6rem;
-      padding-bottom: 0.4rem;
+      margin: 1.25rem 0 0.5rem;
+      padding-bottom: 0.3rem;
       border-bottom: 1px solid var(--border);
-    }
-
-    .group-heading:first-child {
-      margin-top: 0;
     }
 
     .card {
@@ -149,28 +99,9 @@
       color: var(--muted);
       line-height: 1.5;
     }
-
-    .empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
   </style>
 </head>
 <body>
-
-<header>
-  <h1>Blind Baker <span>/ reference</span></h1>
-</header>
-
-<div class="controls">
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('baking', this)">Baking</button>
-    <button class="tab" onclick="switchTab('sauces', this)">Sauces</button>
-  </div>
-  <input type="search" placeholder="Search..." oninput="filterCards(this.value)" id="search">
-</div>
 
 <main id="cards"></main>
 
@@ -178,97 +109,55 @@
 const recipes = [
   // ── BAKING ────────────────────────────────────────────────
   {
-    category: "baking", sub: "Bread",
+    category: "Baking", sub: "Bread",
     name: "Basic Bread",
     ratio: "5 : 3", label: "flour : water",
     ingredients: ["flour", "water", "yeast", "salt"]
   },
   {
-    category: "baking", sub: "Bread",
-    name: "Enriched Dough / Brioche",
-    ratio: "1 : 1 : 1", label: "flour : eggs : butter",
-    ingredients: ["flour", "eggs", "butter", "sugar", "yeast", "salt", "milk"]
-  },
-  {
-    category: "baking", sub: "Cakes",
-    name: "Butter Cake (1-2-3-4)",
-    ratio: "1 : 2 : 3 : 4", label: "butter : sugar : flour : eggs",
-    ingredients: ["butter", "sugar", "flour", "eggs", "milk", "baking powder", "vanilla", "salt"]
-  },
-  {
-    category: "baking", sub: "Cakes",
+    category: "Baking", sub: "Cakes",
     name: "Pound Cake",
     ratio: "1 : 1 : 1 : 1", label: "butter : sugar : eggs : flour",
     ingredients: ["butter", "sugar", "eggs", "flour", "vanilla", "salt"]
   },
   {
-    category: "baking", sub: "Cakes",
+    category: "Baking", sub: "Cakes",
     name: "Sponge / Genoise",
     ratio: "1 : 1 : 1", label: "eggs : sugar : flour",
     ingredients: ["eggs", "sugar", "flour", "clarified butter (optional)"]
   },
   {
-    category: "baking", sub: "Cookies",
+    category: "Baking", sub: "Cookies",
     name: "Basic Cookie (3-2-1)",
     ratio: "3 : 2 : 1", label: "flour : fat : sugar",
     ingredients: ["flour", "butter", "sugar", "egg", "vanilla", "salt", "baking soda"]
   },
   {
-    category: "baking", sub: "Cookies",
-    name: "Shortbread",
-    ratio: "3 : 2 : 1", label: "flour : butter : sugar",
-    ingredients: ["flour", "butter", "powdered sugar", "salt"]
-  },
-  {
-    category: "baking", sub: "Pie Dough",
+    category: "Baking", sub: "Pie Dough",
     name: "Standard Pie Dough (3-2-1)",
     ratio: "3 : 2 : 1", label: "flour : fat : water",
     ingredients: ["flour", "butter", "ice water", "salt"]
   },
   {
-    category: "baking", sub: "Pie Dough",
-    name: "Sweet Tart Dough (Pâte Sucrée)",
-    ratio: "3 : 2 : 1", label: "flour : butter : sugar",
-    ingredients: ["flour", "butter", "sugar", "egg yolk", "salt", "vanilla"]
-  },
-  {
-    category: "baking", sub: "Biscuits & Scones",
+    category: "Baking", sub: "Biscuits",
     name: "Biscuits",
     ratio: "3 : 1 : 2", label: "flour : fat : liquid",
     ingredients: ["flour", "butter", "buttermilk", "baking powder", "salt"]
   },
   {
-    category: "baking", sub: "Biscuits & Scones",
-    name: "Scones",
-    ratio: "3 : 1 : 1", label: "flour : fat : liquid",
-    ingredients: ["flour", "butter", "cream", "egg", "sugar", "baking powder", "salt"]
-  },
-  {
-    category: "baking", sub: "Meringue",
+    category: "Baking", sub: "Meringue",
     name: "French Meringue",
     ratio: "1 : 2", label: "egg whites : sugar",
     ingredients: ["egg whites", "sugar", "cream of tartar"]
   },
   {
-    category: "baking", sub: "Meringue",
-    name: "Italian Meringue",
-    ratio: "1 : 2", label: "egg whites : sugar (hot syrup)",
-    ingredients: ["egg whites", "sugar", "water"]
-  },
-  {
-    category: "baking", sub: "Quick Breads",
-    name: "Muffins / Quick Bread",
-    ratio: "2 : 2 : 1 : 1", label: "flour : liquid : egg : fat",
-    ingredients: ["flour", "milk", "egg", "butter", "sugar", "baking powder", "salt"]
-  },
-  {
-    category: "baking", sub: "Quick Breads",
+    category: "Baking", sub: "Quick Breads",
     name: "Pancakes",
     ratio: "1 : 1 : 1", label: "flour : milk : egg",
     ingredients: ["flour", "milk", "egg", "butter", "sugar", "baking powder", "salt"]
   },
   {
-    category: "baking", sub: "Quick Breads",
+    category: "Baking", sub: "Quick Breads",
     name: "Crêpes",
     ratio: "2 : 1 : 1", label: "milk : flour : eggs",
     ingredients: ["milk", "flour", "eggs", "butter", "salt"]
@@ -276,155 +165,76 @@ const recipes = [
 
   // ── SAUCES ────────────────────────────────────────────────
   {
-    category: "sauces", sub: "Mother Sauces",
+    category: "Sauces", sub: "Mother Sauces",
     name: "Béchamel",
     ratio: "1 : 1 : 8", label: "butter : flour : milk",
     ingredients: ["butter", "flour", "whole milk", "salt", "white pepper", "nutmeg"]
   },
   {
-    category: "sauces", sub: "Mother Sauces",
+    category: "Sauces", sub: "Mother Sauces",
     name: "Velouté",
     ratio: "1 : 1 : 8", label: "butter : flour : light stock",
     ingredients: ["butter", "flour", "chicken / fish / veal stock", "salt", "white pepper"]
   },
   {
-    category: "sauces", sub: "Mother Sauces",
+    category: "Sauces", sub: "Mother Sauces",
     name: "Espagnole",
     ratio: "1 : 1 : 8", label: "butter : flour : brown stock",
     ingredients: ["butter", "flour", "brown stock", "tomato paste", "onion", "carrot", "celery", "salt", "pepper"]
   },
   {
-    category: "sauces", sub: "Mother Sauces",
+    category: "Sauces", sub: "Mother Sauces",
     name: "Hollandaise",
     ratio: "1 : 5", label: "egg yolks : clarified butter",
     ingredients: ["egg yolks", "clarified butter", "lemon juice", "cayenne", "salt"]
   },
   {
-    category: "sauces", sub: "Mother Sauces",
+    category: "Sauces", sub: "Mother Sauces",
     name: "Tomato Sauce",
     ratio: "—", label: "no fixed ratio",
     ingredients: ["tomatoes", "stock", "onion", "garlic", "carrot", "butter", "bay leaf", "salt", "pepper"]
   },
-  {
-    category: "sauces", sub: "Béchamel Derivatives",
-    name: "Mornay",
-    ratio: "béchamel + cheese", label: "~½ cup cheese per 1 cup base",
-    ingredients: ["béchamel", "gruyère", "parmesan", "nutmeg"]
-  },
-  {
-    category: "sauces", sub: "Béchamel Derivatives",
-    name: "Alfredo",
-    ratio: "1 : 1 : 1", label: "butter : cream : parmesan",
-    ingredients: ["butter", "heavy cream", "parmesan", "salt", "pepper"]
-  },
-  {
-    category: "sauces", sub: "Velouté Derivatives",
-    name: "Gravy / Pan Sauce",
-    ratio: "1 : 1 : 8", label: "fat : flour : stock",
-    ingredients: ["pan drippings / butter", "flour", "stock", "salt", "pepper"]
-  },
-  {
-    category: "sauces", sub: "Velouté Derivatives",
-    name: "Sauce Suprême",
-    ratio: "velouté + cream", label: "~¼ cup cream per 1 cup base",
-    ingredients: ["chicken velouté", "heavy cream", "butter", "lemon juice"]
-  },
-  {
-    category: "sauces", sub: "Espagnole Derivatives",
-    name: "Demi-Glace",
-    ratio: "1 : 1 → ½", label: "espagnole : brown stock (reduce by half)",
-    ingredients: ["espagnole", "brown stock"]
-  },
-  {
-    category: "sauces", sub: "Espagnole Derivatives",
-    name: "Bordelaise",
-    ratio: "demi-glace + wine", label: "~1 cup wine per 2 cups demi",
-    ingredients: ["demi-glace", "red wine", "shallots", "thyme", "bay leaf", "butter"]
-  },
-  {
-    category: "sauces", sub: "Hollandaise Derivatives",
-    name: "Béarnaise",
-    ratio: "same as hollandaise", label: "swap lemon for tarragon reduction",
-    ingredients: ["egg yolks", "clarified butter", "tarragon", "shallots", "white wine vinegar", "chervil", "salt", "cayenne"]
-  },
-  {
-    category: "sauces", sub: "Tomato Derivatives",
-    name: "Marinara",
-    ratio: "—", label: "simple / no fixed ratio",
-    ingredients: ["crushed tomatoes", "garlic", "olive oil", "basil", "salt"]
-  },
-  {
-    category: "sauces", sub: "Other",
-    name: "Vinaigrette",
-    ratio: "3 : 1", label: "oil : vinegar",
-    ingredients: ["oil", "vinegar", "mustard", "salt", "pepper"]
-  },
-  {
-    category: "sauces", sub: "Other",
-    name: "Caramel Sauce",
-    ratio: "1 : 1 : 1", label: "sugar : cream : butter",
-    ingredients: ["sugar", "heavy cream", "butter", "salt", "vanilla"]
-  },
-  {
-    category: "sauces", sub: "Other",
-    name: "Crème Anglaise",
-    ratio: "4 : 1 : 2", label: "cream : egg yolks : sugar",
-    ingredients: ["heavy cream", "egg yolks", "sugar", "vanilla"]
-  },
 ];
 
-let currentCategory = "baking";
+function esc(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
-function render(category, query = "") {
-  const q = query.toLowerCase();
-  const filtered = recipes.filter(r =>
-    r.category === category &&
-    (!q || r.name.toLowerCase().includes(q) || r.sub.toLowerCase().includes(q) || r.ingredients.join(" ").toLowerCase().includes(q))
-  );
-
-  if (!filtered.length) {
-    document.getElementById("cards").innerHTML = '<div class="empty">No results.</div>';
-    return;
-  }
-
-  const groups = {};
-  filtered.forEach(r => {
-    if (!groups[r.sub]) groups[r.sub] = [];
-    groups[r.sub].push(r);
+function render() {
+  const sections = {};
+  recipes.forEach(r => {
+    if (!sections[r.category]) sections[r.category] = {};
+    if (!sections[r.category][r.sub]) sections[r.category][r.sub] = [];
+    sections[r.category][r.sub].push(r);
   });
 
   let html = "";
-  for (const [sub, items] of Object.entries(groups)) {
-    html += `<div class="group-heading">${sub}</div>`;
-    items.forEach(r => {
-      html += `
+  for (const [category, groups] of Object.entries(sections)) {
+    html += `<h2 class="section-heading">${esc(category)}</h2>`;
+    for (const [sub, items] of Object.entries(groups)) {
+      html += `<h3 class="group-heading">${esc(sub)}</h3>`;
+      items.forEach(r => {
+        html += `
         <div class="card">
-          <div class="card-name">${r.name}</div>
+          <div class="card-name">${esc(r.name)}</div>
           <div>
-            <span class="card-ratio">${r.ratio}</span>
-            <span class="card-ratio-label">${r.label}</span>
+            <span class="card-ratio">${esc(r.ratio)}</span>
+            <span class="card-ratio-label">${esc(r.label)}</span>
           </div>
-          <div class="card-ingredients">${r.ingredients.join(", ")}</div>
+          <div class="card-ingredients">${esc(r.ingredients.join(", "))}</div>
         </div>`;
-    });
+      });
+    }
   }
 
   document.getElementById("cards").innerHTML = html;
 }
 
-function switchTab(category, btn) {
-  currentCategory = category;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  btn.classList.add("active");
-  document.getElementById("search").value = "";
-  render(category);
-}
-
-function filterCards(q) {
-  render(currentCategory, q);
-}
-
-render("baking");
+render();
 </script>
 </body>
 </html>
